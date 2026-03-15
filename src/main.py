@@ -19,23 +19,20 @@ docs = loader.load()
 print(len(docs))
 split_docs = text_splitter.split_documents(docs)
 print(len(split_docs))
-print(split_docs[67])
 
-embed = OllamaEmbeddings(model="embeddinggemma")
-
-vector_client = QdrantClient(url="http://localhost:6333")
-
-vector_client.create_collection(
-    collection_name="demo_collection",
-    vectors_config=VectorParams(size=768, distance=Distance.COSINE),
-)
-
-vector_store = QdrantVectorStore(
-    client=vector_client,
-    collection_name="demo_collection",
-    embedding=embed,
-)
+embeddings = OllamaEmbeddings(model="embeddinggemma")
 
 uuids = [str(uuid4()) for _ in range(len(split_docs))]
-vector_store.add_documents(documents=split_docs, ids=uuids)
+
+qdrant = QdrantVectorStore.from_documents(
+    split_docs,
+    embeddings,
+    ids = uuids,
+    url="http://localhost:6333",
+    collection_name="my_documents",
+)
+
+found_docs = qdrant.similarity_search("What are the top reasons to learn a language")
+for found in found_docs:
+    print(found)
 
