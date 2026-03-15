@@ -5,7 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "langchain>=1.2.12",
     "langchain-community>=0.4.1",
+    "langchain-ollama>=1.0.1",
+    "langchain-qdrant>=1.1.0",
     "langchain-text-splitters>=1.1.1",
     "pypdf>=6.8.0",
 ]
