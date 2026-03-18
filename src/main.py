@@ -32,7 +32,7 @@ template = [("human", """You are an assistant for question-answering tasks.
 
 prompt = ChatPromptTemplate(template)
 
-llm = ChatOllama(model="gemma3:1b", temperature=0.5)
+llm = ChatOllama(model="gemma3:4b", temperature=0.5)
 
 rag_chain = (
     {"context": retriever | format_docs, "question": RunnablePassthrough()}
