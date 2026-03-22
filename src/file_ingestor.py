@@ -7,9 +7,9 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from uuid import uuid4
+import os
 
-file_path = "./pdf/hyperpolyglot-handbook.pdf"
-loader = PyPDFLoader(file_path)
+FOLDER_PATH = ".\\pdf"
 
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000, 
@@ -17,10 +17,15 @@ text_splitter = RecursiveCharacterTextSplitter(
     add_start_index=True, 
 )
 
-docs = loader.load()
-print(len(docs))
-split_docs = text_splitter.split_documents(docs)
-print(len(split_docs))
+split_docs = []
+for file_name in os.listdir(FOLDER_PATH):
+    file_path = os.path.join(FOLDER_PATH, file_name)
+    loader = PyPDFLoader(file_path)
+
+    docs = loader.load()
+    print(len(docs))
+    split_docs.extend(text_splitter.split_documents(docs))
+    print(len(split_docs))
 
 embeddings = OllamaEmbeddings(model="embeddinggemma")
 
