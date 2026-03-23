@@ -40,8 +40,3 @@ rag_chain = (
     | llm
     | StrOutputParser()
 )
-
-query = input("> ")
-
-response = rag_chain.invoke(query)
-print(response)
