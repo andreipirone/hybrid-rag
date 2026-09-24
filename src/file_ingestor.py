@@ -5,7 +5,7 @@ from langchain_qdrant import QdrantVectorStore
 from uuid import uuid4
 import os
 
-FOLDER_PATH = ".\\pdf"
+FOLDER_PATH = "./pdf"
 
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000, 
